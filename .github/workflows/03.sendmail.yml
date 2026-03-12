@@ -1,0 +1,29 @@
+name: Send mail
+on: push
+
+jobs:
+  mail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Print Hello World
+        run: echo "Hello World"
+
+      - name: Sending a mail
+        if: ${{ always() }}
+        uses: devellany/send-mailer@v1.0.2
+        with:
+          host: smtp.gmail.com
+          port: 465
+          account: ${{secrets.ACCOUNT}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          sender: devellany
+          from: ${{secrets.MAIL_ADDRESS}}
+          to: tsarujan2001@gmail.com
+          subject: Sending a mail using github action.
+          body: Done!.
+          contentType: text/plain
+          # Ensure README.md exists in your repo for this to work
+          attachments: '[{"path":"README.md"}]'
